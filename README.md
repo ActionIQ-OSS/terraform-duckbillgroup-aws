@@ -8,7 +8,7 @@ Inspired by: https://github.com/DuckbillGroup/onboarding/
 
 ```
 module "theduckbillgroup" {
-  source = "terraform-duckbillgroup-aws"
+  source = "ActionIQ-OSS/aws/duckbillgroup"
 
   customer_name_slug = "horrifyingbills-please-help"
   cur_bucket_name = "example-cost-and-usage-reports-bucket-name"
