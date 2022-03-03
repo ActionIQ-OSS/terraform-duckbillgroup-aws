@@ -1,32 +1,5 @@
 # These Terraform resources create a remote access role for Duckbill Group.
 
-
-# Variables
-
-variable "customer_name_slug" {
-  type        = string
-  description = "A short, lower-case slug that identifies your company, e.g. 'acme-corp'. Duckbill Group will need to know this value, so that we can set up our own infrastructure for you."
-}
-
-variable "cur_bucket_name" {
-  type        = string
-  description = "Name of the S3 bucket in which you are storing Cost and Usage Reports."
-}
-
-variable "external_id" {
-  type        = string
-  description = "Customer Specific External ID string"
-}
-
-
-# Providers
-
-provider "aws" {
-  region  = "us-east-1"
-  version = "~> 2.53"
-}
-
-
 # DuckbillGroup IAM Role
 
 data "aws_iam_policy_document" "DuckbillGroup_AssumeRole_policy_document" {
@@ -35,13 +8,13 @@ data "aws_iam_policy_document" "DuckbillGroup_AssumeRole_policy_document" {
 
     principals {
       type        = "AWS"
-      identifiers = ["753095100886"]
+      identifiers = [var.duckbillgroup_aws_account]
     }
 
     condition {
       test     = "StringEquals"
       variable = "sts:ExternalId"
-      values   = ["${var.external_id}"]
+      values   = [var.external_id]
     }
   }
 }
